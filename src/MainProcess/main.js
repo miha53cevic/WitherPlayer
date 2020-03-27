@@ -72,6 +72,9 @@ function createWindow() {
     // Check for settings button click in the ipcRenderer
     ipcMain.on('settings', (event, args) => {
         // Open a new small window
+
+        // TEMPORARY JUST OPEN MUSIC FOLDER
+        showOpen();
     });
 
     // Check for minimize button click in the ipcRenderer
