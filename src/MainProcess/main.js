@@ -1,10 +1,15 @@
 const {
     app,
-    BrowserWindow
+    BrowserWindow,
+    ipcMain,
+    dialog
 } = require('electron');
 
 // electron-json-config - npm package
 const config = require('electron-json-config');
+
+const fs = require('fs');
+const path = require("path");
 
 function createWindow() {
 
@@ -22,8 +27,34 @@ function createWindow() {
         }
     });
 
-    // Load html file into the window
-    win.loadFile('src/RendererProcess/index.html');
+    // Get tracks from current folder/music/*
+    const getAllFiles = function (dirPath, arrayOfFiles) {
+        files = fs.readdirSync(dirPath);
+
+        arrayOfFiles = arrayOfFiles || [];
+
+        files.forEach(function (file) {
+            if (fs.statSync(dirPath + "/" + file).isDirectory()) {
+                arrayOfFiles = getAllFiles(dirPath + "/" + file, arrayOfFiles);
+            } else {
+                arrayOfFiles.push(path.join(dirPath, "/", file));
+            }
+        });
+
+        return arrayOfFiles;
+    };
+
+    // If no config exists ask for the music folder at launch
+    if (!config.has('music-folder')) {
+        showOpen();
+    } else {
+        // Get tracks inside the music folder
+        global.tracks = getAllFiles(config.get('music-folder'));
+        console.log("Config location: " + app.getPath('userData'));
+
+        // Load html file into the window
+        win.loadFile('src/RendererProcess/index.html');
+    }
 
     // Set application title
     win.setTitle('WitherMiniPlayer');
@@ -33,6 +64,29 @@ function createWindow() {
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
         win = null
+    });
+
+    // Check for x button click in the ipcRenderer
+    ipcMain.on('exit', (event, args) => app.quit());
+
+    // Check for settings button click in the ipcRenderer
+    ipcMain.on('settings', (event, args) => {
+        // Open a new small window
+    });
+
+    // Check for minimize button click in the ipcRenderer
+    ipcMain.on('minimize', (event, args) => {
+        win.minimize();
+    });
+}
+
+function showOpen() {
+    dialog.showOpenDialog({
+        properties: ['openDirectory']
+    }).then(data => {
+        config.set('music-folder', data.filePaths[0]);
+        app.quit();
+        app.relaunch();
     });
 }
 

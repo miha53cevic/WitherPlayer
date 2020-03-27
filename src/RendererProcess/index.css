@@ -26,13 +26,16 @@ body {
     height: 100%;
     border-top-left-radius: 1rem;
     border-bottom-left-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .player-body {
     flex: 1;
     display: flex;
     flex-direction: row;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.75);
     border-top-right-radius: 1rem;
     border-bottom-right-radius: 1rem;
 }
@@ -44,6 +47,7 @@ body {
 }
 
 .title-area {
+    flex: 1;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -54,18 +58,65 @@ body {
 
 .nav-item {
     color: white;
-    background-color: #181C1D;
+    background-color: transparent;
     padding: 0.5rem;
+
+    /*
+        Must add otherwise drag takes over all mouse events
+        Read: https://github.com/electron/electron/issues/1354
+    */
+    -webkit-app-region: no-drag;
+}
+
+.nav-item:hover {
+    color: gray;
+    cursor: pointer;
 }
 
 .title {
     color: white;
 }
 
-.close-btn {
+.titlebar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.navbar {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+}
+
+.navbar-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#volume-slider {
+    -webkit-appearance: none;
+    height: 5px;
+    align-self: center;
+    border-radius: 5px;
+    background: linear-gradient(to right, orange , yellow, lightgreen, cyan, violet);
+    outline: none;
+    -webkit-app-region: no-drag;
+    margin-right: 1rem;
+}
+
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
+}
+
+#volume-slider:hover {
+    cursor: pointer;
 }
 
 /*------------------------------------------------------------------------------------*/

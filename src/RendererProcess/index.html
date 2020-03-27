@@ -14,6 +14,11 @@
         delete window.exports;
         delete window.module;
     </script>
+    <script>
+        // Get the track locations from main.js through a global
+        const tracks = window.nodeRequire('electron').remote.getGlobal('tracks');
+        console.log(tracks);
+    </script>
     <script src='jquery/3.4.1/jquery.min.js'></script>
     <script src="index.js"></script>
 </head>
@@ -22,19 +27,30 @@
     <main class="main">
 
         <div class="image-area">
-
+            <i class="fa fa-pause fa-3x nav-item" id="play-pause"></i>
         </div>
 
         <div class="player-body">
             <div class="title-area">
-                <h2 class="title">My title</h2>
+                <h3 class="title">My title</h3>
             </div>
             <div class="controls">
-                <div class="close-btn">
+                <div class="titlebar">
+                    <i class="fa fa-window-minimize fa-lg nav-item" id="minimize"></i>
+                    <i class="fa fa-cog fa-lg nav-item" id="settings"></i>
                     <i class="fa fa-times fa-lg nav-item" id="close"></i>
                 </div>
                 <div class="navbar">
-
+                    <div class="navbar-items">
+                        <i id="step-backward" class="fa fa-step-backward fa-lg nav-item"></i>
+                        <i id="step-forward" class="fa fa-step-forward fa-lg nav-item"></i>
+                        <i id="random" class="fa fa-random fa-lg nav-item"></i>
+                        <i id="repeat" class="fa fa-repeat fa-lg nav-item"></i>
+                    </div>
+                    <div class="navbar-items">
+                        <i id="volume" class="fa fa-volume-up fa-lg nav-item"></i>
+                        <input id="volume-slider" min="0" max="100" value="100" type="range">
+                    </div>
                 </div>
             </div>
         </div>
@@ -42,7 +58,19 @@
     </main>
 </body>
 <script>
-    
+    // Send to main that you want to quit
+    const ipc = window.nodeRequire('electron').ipcRenderer;
+    $('#close').click(function () {
+        ipc.send('exit', true);
+    });
+
+    $('#settings').click(function () {
+        ipc.send('settings', true);
+    });
+
+    $('#minimize').click(function () {
+        ipc.send('minimize', true);
+    });
 </script>
 
 </html>
