@@ -1,0 +1,71 @@
+* {
+    box-sizing: border-box;
+    font-family: Raleway;
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+}
+
+/*------------------------------------------------------------------------------------*/
+
+.main {
+    /* Allow it to be draggable */
+    -webkit-app-region: drag;
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+}
+
+.image-area {
+    background-color: #1E1E1E;
+    width: 125px;
+    height: 100%;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+}
+
+.player-body {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+.controls {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.title-area {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+/*------------------------------------------------------------------------------------*/
+
+.nav-item {
+    color: white;
+    background-color: #181C1D;
+    padding: 0.5rem;
+}
+
+.title {
+    color: white;
+}
+
+.close-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/*------------------------------------------------------------------------------------*/
