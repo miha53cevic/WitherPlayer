@@ -27,6 +27,12 @@ function createWindow() {
         }
     });
 
+    // Try to load the last window position if it exists
+    const bounds = config.get('bounds');
+    if (bounds !== undefined) {
+        win.setBounds(bounds);
+    }
+
     // Get tracks from current folder/music/*
     const getAllFiles = function (dirPath, arrayOfFiles) {
         files = fs.readdirSync(dirPath);
@@ -64,6 +70,12 @@ function createWindow() {
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
         win = null
+
+    });
+
+    win.on('close', () => {
+        // Save the last window position
+        config.set('bounds', win.getBounds());
     });
 
     // Check for x button click in the ipcRenderer
