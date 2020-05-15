@@ -55,21 +55,26 @@ function createWindow() {
         showOpen();
     } else {
         // Get tracks inside the music folder
-        global.tracks = getAllFiles(config.get('music-folder'));
-        console.log("Config location: " + app.getPath('userData'));
+        try {
+            global.tracks = getAllFiles(config.get('music-folder'));
+            console.log("Config location: " + app.getPath('userData'));
+        } catch(error) {
+            console.error(error);
+            showOpen();
+        }
 
         // Load html file into the window
         win.loadFile('src/RendererProcess/index.html');
     }
 
     // Set application title
-    win.setTitle('WitherMiniPlayer');
+    win.setTitle('WitherPlayer');
 
     win.on('closed', () => {
         // Dereference the window object, usually you would store windows
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
-        win = null
+        win = null;
 
     });
 
