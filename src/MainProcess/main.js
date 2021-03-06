@@ -110,4 +110,5 @@ function showOpen() {
     });
 }
 
-app.on('ready', createWindow);
+// Set timeout for linux transparency issue
+app.on('ready', () => setTimeout(createWindow, 500));
