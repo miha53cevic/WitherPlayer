@@ -15,8 +15,9 @@
         delete window.module;
     </script>
     <script>
-        // Get the track locations from main.js through a global
-        const tracks = window.nodeRequire('electron').remote.getGlobal('tracks');
+        // Get the track locations from main.js by using ipcRenderer to send a requst to main
+        const ipc = window.nodeRequire('electron').ipcRenderer;
+        const tracks = ipc.sendSync("tracks");
         console.log(tracks);
     </script>
     <script src='jquery/3.4.1/jquery.min.js'></script>
@@ -59,7 +60,7 @@
 </body>
 <script>
     // Send to main that you want to quit
-    const ipc = window.nodeRequire('electron').ipcRenderer;
+    // ipc is ipcRenderer which is declared above
     $('#close').click(function () {
         ipc.send('exit', true);
     });

@@ -1,10 +1,12 @@
-let play_pause = 'pause';
+// Globals
+let play_pause = 'pause';   // 'pause' = ( || ) , 'play' = ( > )
 let random = false;
 let repeat = false;
 
 let audioPlayer;
 let current_track = 0;
 
+// Initial load
 window.onload = () => {
     init();
 };
@@ -170,7 +172,12 @@ function init() {
         if (current_track > 0) {
             current_track--;
             audioPlayer.src = tracks[current_track];
-            audioPlayer.play();
+            console.log(play_pause);
+
+            // If button is set on Pause ( || ) then continue playing 
+            // otherwise if the button is on ( > ) stop playing
+            if (play_pause === 'pause')
+                audioPlayer.play();
 
             updateTitle();
         }
@@ -181,7 +188,11 @@ function init() {
         if (current_track + 1 < tracks.length) {
             current_track++;
             audioPlayer.src = tracks[current_track];
-            audioPlayer.play();
+            
+            // If button is set on Pause ( || ) then continue playing 
+            // otherwise if the button is on ( > ) stop playing
+            if (play_pause === 'pause')
+                audioPlayer.play();
 
             updateTitle();
         }

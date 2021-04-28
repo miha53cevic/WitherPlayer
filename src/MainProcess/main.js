@@ -24,6 +24,7 @@ function createWindow() {
         transparent: true,
         webPreferences: {
             nodeIntegration: true,
+            contextIsolation: false,
         }
     });
 
@@ -82,6 +83,9 @@ function createWindow() {
         // Save the last window position
         config.set('bounds', win.getBounds());
     });
+
+    // Send back the tracks
+    ipcMain.on('tracks', (event, args) => event.returnValue = global.tracks);
 
     // Check for x button click in the ipcRenderer
     ipcMain.on('exit', (event, args) => app.quit());
