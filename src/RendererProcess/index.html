@@ -83,7 +83,7 @@
     // On launch get saved volume and set the slider and player to use it
     const savedVolume = ipc.sendSync('getVolume');
     $("#volume-slider").val(savedVolume * 100);
-    console.log(savedVolume);
+    console.log(`Received saved volume value: ${savedVolume}`);
     audioPlayer.volume = savedVolume;
 </script>
 
