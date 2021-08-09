@@ -3,7 +3,7 @@ let play_pause = 'pause';   // 'pause' = ( || ) , 'play' = ( > )
 let random = false;
 let repeat = false;
 
-let audioPlayer;
+const audioPlayer = new Audio();
 let current_track = 0;
 
 // Initial load
@@ -71,7 +71,7 @@ function init() {
     create_tracks_list(true);
 
     // Initialize player
-    audioPlayer = new Audio(tracks[current_track]);
+    audioPlayer.src = tracks[current_track];
     audioPlayer.play();
 
     // Set song name
@@ -139,14 +139,6 @@ function init() {
             create_tracks_list();
             // Set the new track
             audioPlayer.src = tracks[current_track];
-
-            // If button is pause ( || ) then we continue playing
-            if (play_pause === 'pause')
-                audioPlayer.play();
-            // If button is play ( > ) then we are still paused
-            else if (play_pause === 'play')
-                audioPlayer.pause();
-
         } else {
             $("#random").css('background-color', 'transparent');
 
@@ -154,8 +146,14 @@ function init() {
             create_tracks_list(true);
             // Play the new current song
             audioPlayer.src = tracks[current_track];
-            audioPlayer.play();
         }
+
+        // If button is pause ( || ) then we continue playing
+        if (play_pause === 'pause')
+            audioPlayer.play();
+        // If button is play ( > ) then we are still paused
+        else if (play_pause === 'play')
+            audioPlayer.pause();
 
         updateTitle();
     });
@@ -204,8 +202,4 @@ function init() {
         }
     });
 
-    // Volume
-    $("#volume-slider").bind('change', () => {
-        audioPlayer.volume = $("#volume-slider").val() / 100;
-    });
 }
