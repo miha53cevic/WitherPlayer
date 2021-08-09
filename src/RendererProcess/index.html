@@ -72,6 +72,19 @@
     $('#minimize').click(function () {
         ipc.send('minimize', true);
     });
+
+    // Send volume slider position to main so it can be saved
+    $("#volume-slider").bind('change', () => {
+        audioPlayer.volume = $("#volume-slider").val() / 100;
+
+        ipc.send('volumeChange', audioPlayer.volume);
+    });
+
+    // On launch get saved volume and set the slider and player to use it
+    const savedVolume = ipc.sendSync('getVolume');
+    $("#volume-slider").val(savedVolume * 100);
+    console.log(savedVolume);
+    audioPlayer.volume = savedVolume;
 </script>
 
 </html>

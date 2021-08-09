@@ -102,6 +102,18 @@ function createWindow() {
     ipcMain.on('minimize', (event, args) => {
         win.minimize();
     });
+
+    // Get volume slider position change to save
+    ipcMain.on('volumeChange', (event, args) => {
+        config.set('volume', args);
+    });
+
+    // Send volume from settings
+    ipcMain.on('getVolume', (event, args) => {
+        if (config.has('volume')) {
+            event.returnValue = config.get('volume');
+        } else event.returnValue = 1.0;
+    });
 }
 
 function showOpen() {
@@ -114,5 +126,4 @@ function showOpen() {
     });
 }
 
-// Set timeout for linux transparency issue
-app.on('ready', () => setTimeout(createWindow, 500));
+app.on('ready', () => createWindow());
