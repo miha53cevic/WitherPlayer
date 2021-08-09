@@ -137,9 +137,15 @@ function init() {
             shuffleArray(tracks);
             // Create the new track list
             create_tracks_list();
-            // Play the new current song
+            // Set the new track
             audioPlayer.src = tracks[current_track];
-            audioPlayer.play();
+
+            // If button is pause ( || ) then we continue playing
+            if (play_pause === 'pause')
+                audioPlayer.play();
+            // If button is play ( > ) then we are still paused
+            else if (play_pause === 'play')
+                audioPlayer.pause();
 
         } else {
             $("#random").css('background-color', 'transparent');
