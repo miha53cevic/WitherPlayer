@@ -1,6 +1,6 @@
 {
   "name": "witherplayer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A small and slick music player",
   "main": "./src/MainProcess/main.js",
   "scripts": {
