@@ -7,21 +7,9 @@
     <link rel='stylesheet' href='fonts/Raleway.css'>
     <link rel='stylesheet' href='fonts/fontawesome.css'>
     <link rel="stylesheet" href="index.css">
-    <script>
-        // Name conflicts with jquerry
-        window.nodeRequire = require;
-        delete window.require;
-        delete window.exports;
-        delete window.module;
-    </script>
-    <script>
-        // Get the track locations from main.js by using ipcRenderer to send a requst to main
-        const ipc = window.nodeRequire('electron').ipcRenderer;
-        const tracks = ipc.sendSync("tracks");
-        console.log(tracks);
-    </script>
     <script src='jquery/3.4.1/jquery.min.js'></script>
-    <script src="index.js"></script>
+    <script src="ipcAPI.js"></script>
+    <script src="index.js" defer></script>
 </head>
 
 <body>
@@ -59,32 +47,6 @@
     </main>
 </body>
 <script>
-    // Send to main that you want to quit
-    // ipc is ipcRenderer which is declared above
-    $('#close').click(function () {
-        ipc.send('exit', true);
-    });
-
-    $('#settings').click(function () {
-        ipc.send('settings', true);
-    });
-
-    $('#minimize').click(function () {
-        ipc.send('minimize', true);
-    });
-
-    // Send volume slider position to main so it can be saved
-    $("#volume-slider").bind('change', () => {
-        audioPlayer.volume = $("#volume-slider").val() / 100;
-
-        ipc.send('volumeChange', audioPlayer.volume);
-    });
-
-    // On launch get saved volume and set the slider and player to use it
-    const savedVolume = ipc.sendSync('getVolume');
-    $("#volume-slider").val(savedVolume * 100);
-    console.log(`Received saved volume value: ${savedVolume}`);
-    audioPlayer.volume = savedVolume;
 </script>
 
 </html>
