@@ -28,7 +28,7 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
-            preload: path_1.default.join(__dirname, '../Preload/preload.js')
+            preload: path_1.default.join(__dirname, 'preload.js')
         }
     });
     // Try to load the last window position if it exists
